@@ -1,8 +1,12 @@
 {
   "name": "electron-auto-update-example",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pedrocarreira1/electron-auto-update-example.git"
+  },
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,9 +21,5 @@
   },
   "dependencies": {
     "electron-updater": "^4.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pedrocarreira1/electron-auto-update-example.git"
   }
 }
