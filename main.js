@@ -24,8 +24,11 @@ app.on('ready', () => {
     createWindow();
 
     autoUpdater.checkForUpdatesAndNotify()
-        .then(() => {})
+        .then((arg) => {
+            mainWindow.webContents.send('test_check_for_update', {arg})
+        })
         .catch((error) => {
+            mainWindow.webContents.send('test_check_for_update', {error})
     });
 
 });
@@ -47,7 +50,7 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', () => {
-    mainWindow.webContents.send('update_available', {});
+    mainWindow.webContents.send('update_available');
 });
 
 autoUpdater.on('update-downloaded', () => {
