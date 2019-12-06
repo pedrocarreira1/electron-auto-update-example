@@ -24,9 +24,12 @@ app.on('ready', () => {
     createWindow();
 
     autoUpdater.checkForUpdatesAndNotify()
-        .then((arg) => {
-            mainWindow.webContents.send('test_check_for_update', {arg})
-        });
+        .then(() => {
+            mainWindow.webContents.send('test_check_for_update', 'success')
+        })
+        .catch((error) => {
+            mainWindow.webContents.send('test_check_for_update', {error})
+    });
 
 });
 
