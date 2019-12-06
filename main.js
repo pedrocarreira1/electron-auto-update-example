@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
+const log = require('electron-log');
 
 let mainWindow;
 
@@ -17,11 +18,17 @@ function createWindow () {
     });
 }
 
+// This line gets the code from the newly created file logger.js
+
 app.on('ready', () => {
     createWindow();
-    console.log('ready entrou');
-    autoUpdater.checkForUpdatesAndNotify();
-    console.log('checked for updates passou');
+    log.info('ready entrou');
+    autoUpdater.checkForUpdatesAndNotify()
+        .then(() => {})
+        .catch((error) => {
+            log.info(error);
+    });
+    log.info('ready entrou');
 });
 
 app.on('window-all-closed', function () {
@@ -41,12 +48,12 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', () => {
-    console.log('update available entrou');
+    log.info('update available entrou');
     mainWindow.webContents.send('update_available');
 });
 
 autoUpdater.on('update-downloaded', () => {
-    console.log('update downloaded entrou');
+    log.info('update downloaded entrou');
     mainWindow.webContents.send('update_downloaded');
 });
 
