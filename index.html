@@ -44,17 +44,22 @@
     const message = document.getElementById('message');
     const restartButton = document.getElementById('restart-button');
 
+    ///
+
     ipcRenderer.send('app_version');
     ipcRenderer.on('app_version', (event, arg) => {
+        console.log('entrou na app version');
         ipcRenderer.removeAllListeners('app_version');
         version.innerText = 'Version ' + arg.version;
     });
     ipcRenderer.on('update_available', () => {
+        console.log('entrou na update available');
         ipcRenderer.removeAllListeners('update_available');
         message.innerText = 'A new update is available. Downloading now...';
         notification.classList.remove('hidden');
     });
     ipcRenderer.on('update_downloaded', () => {
+        console.log('entrou na update downloaded');
         ipcRenderer.removeAllListeners('update_downloaded');
         message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
         restartButton.classList.remove('hidden');

@@ -1,6 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require('electron-updater');
-const log = require('electron-log');
 
 let mainWindow;
 
@@ -13,6 +12,7 @@ function createWindow () {
         },
     });
     mainWindow.loadFile('index.html');
+    mainWindow.webContents.openDevTools();
     mainWindow.on('closed', function () {
         mainWindow = null;
     });
@@ -22,13 +22,12 @@ function createWindow () {
 
 app.on('ready', () => {
     createWindow();
-    log.info('ready entrou');
+
     autoUpdater.checkForUpdatesAndNotify()
         .then(() => {})
         .catch((error) => {
-            log.info(error);
     });
-    log.info('ready entrou');
+
 });
 
 app.on('window-all-closed', function () {
@@ -48,15 +47,26 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', () => {
-    log.info('update available entrou');
-    mainWindow.webContents.send('update_available');
+    mainWindow.webContents.send('update_available', {});
 });
 
 autoUpdater.on('update-downloaded', () => {
-    log.info('update downloaded entrou');
     mainWindow.webContents.send('update_downloaded');
 });
 
 ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
 });
+
+//Test
+
+/*
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg); // prints "ping"
+    event.reply('asynchronous-reply', 'pong')
+});
+
+ipcMain.on('synchronous-message', (event, arg) => {
+    console.log(arg); // prints "ping"
+    event.returnValue = 'pong'
+});*/
