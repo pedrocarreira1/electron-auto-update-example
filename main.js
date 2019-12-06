@@ -23,6 +23,10 @@ function createWindow () {
 app.on('ready', () => {
     createWindow();
 
+    const log = require("electron-log");
+    log.transports.file.level = "debug";
+    autoUpdater.logger = log;
+
     autoUpdater.checkForUpdatesAndNotify()
         .then(() => {
             mainWindow.webContents.send('test_check_for_update', 'success')
