@@ -19,9 +19,9 @@ function createWindow () {
 
 app.on('ready', () => {
     createWindow();
-    alert('ready');
+    console.log('ready entrou');
     autoUpdater.checkForUpdatesAndNotify();
-    alert('checked for updates');
+    console.log('checked for updates passou');
 });
 
 app.on('window-all-closed', function () {
@@ -41,12 +41,12 @@ ipcMain.on('app_version', (event) => {
 });
 
 autoUpdater.on('update-available', () => {
-    alert('update available');
+    console.log('update available entrou');
     mainWindow.webContents.send('update_available');
 });
 
 autoUpdater.on('update-downloaded', () => {
-    alert('update downloaded');
+    console.log('update downloaded entrou');
     mainWindow.webContents.send('update_downloaded');
 });
 
